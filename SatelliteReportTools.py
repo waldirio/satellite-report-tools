@@ -8,12 +8,18 @@
 # 
 import os
 import config
+import mainWindow
 from macpath import split
 
 # Global Vars
 global list
 nameFileOut=""
 nameFileIn=""
+
+
+def openWindow():
+    w = mainWindow.SatReport()
+    mainWindow.gtk.main()
 
 def defineInPutFile():
     global nameFileIn
@@ -75,6 +81,7 @@ def menu():
         print '# 1. Define the output file name'
         print '# 2. Define the CVEs/RHSA file name'
         print '# 3. Check CVE/RHSA from file'
+        print '# 4. Glade Window'
         print '#'
         print '# 9. Exit'
         print '##################################'
@@ -89,6 +96,8 @@ def menu():
             defineInPutFile()
         elif opc == '3':
             listCveRhsa()
+        elif opc == '4':
+            openWindow()
         elif opc == '9':
             print 'Sair ...'
             exit()
