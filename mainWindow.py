@@ -11,59 +11,100 @@ try:
 except:
   sys.exit(1)
 
+import func
+import config
+
+
 class SatReport:
 
     def __init__(self):
 
         # Window definition
-        self.gladefile = "glade/main.glade"
-        self.xmlMain = gtk.glade.XML(self.gladefile)
+        self.gladefile = "glade/satellite-report-tools.glade"
+        self.xml = gtk.glade.XML(self.gladefile)
 
-#    self.gladelogin = "glade/login.glade"
-#    self.xmlLogin = gtk.glade.XML(self.gladelogin)
+
+        dic = { "on_btnLogin_clicked" :                 self.btnLogin_clicked,
+                "on_btnListFileRhsaCve_clicked":        self.btnListFileRhsaCve_clicked,
+                "on_btnOutPutFileRhsaCve_clicked":      self.btnOutPutFileRhsaCve_clicked,
+                "on_btnRunRhsaCve_clicked":             self.btnRunRhsaCve_clicked,
+                "on_btnSendLogin_clicked":              self.btnSendLogin_clicked,
+                "on_btnCleanLogin_clicked":             self.btnCleanLogin_clicked,
+                "on_btnCloseLogin_clicked":             self.btnCloseLogin_clicked,
+                "on_btnAbout_clicked":                  self.btnAbout_clicked,
+                "on_btnCloseAbout_clicked":             self.btnCloseAbout_clicked,
+                "on_Main_destroy" :                     self.main_quit,
+                }
     
-        self.gladeListFileRhsaCve = "glade/chooseListFileRhsaCve.glade"
-        self.xmlChooseListFileRhsaCve = gtk.glade.XML(self.gladeListFileRhsaCve)
+        self.xml.signal_autoconnect(dic)
+
+
+    def btnCloseAbout_clicked(self, widget):
+        self.xml.get_widget('about').hide()
         
-#        self.xmlChooseListFileRhsaCveWindow = self.xmlChooseListFileRhsaCve.get_widget('filechooserdialog1')
-
-        dic = { "on_btnListFileRhsaCve_clicked" : self.btnListFileRhsaCve_clicked,
-                "on_MainWindow_destroy" : gtk.main_quit }
     
-        self.xmlMain.signal_autoconnect(dic)
+    def btnAbout_clicked(self, widget):
+        self.xml.get_widget('about').show()
     
-    
+    def btnLogin_clicked(self, widget):
+        self.xml.get_widget('login').show()
+        config.connectServer()
+        print "Login"
+        
     def btnListFileRhsaCve_clicked(self, widget):
-        print "hello mundo"
- #       self.xmlChooseListFileRhsaCveWindow.show()
+        dialog = gtk.FileChooserDialog('Choose the File list with RHSA and CVEs codes',
+                                       None,
+                                       gtk.FILE_CHOOSER_ACTION_OPEN,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+        response = dialog.run()
         
-    # Button definition
-    # self.btnLogin = self.xml.get_widget('btnLogin')
-    # self.LabelTitle = self.xml.get_widget('LabelTitle')
+        if response == gtk.RESPONSE_OK:
+            func.defineInPutFile(dialog.get_filename())
+            #print pathFile
+            #func.defineOutPutFile(pathFile)
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'closed, no files selected'
+        dialog.destroy()
 
-    # self.btnListFileRhsaCve = self.xml.get_widget('btnListFileRhsaCve')
+        print 'ListFile RHSA CVE'
+        
+    def btnOutPutFileRhsaCve_clicked(self, widget):
+        dialog = gtk.FileChooserDialog('Choose the File list with RHSA and CVEs codes',
+                                       None,
+                                       gtk.FILE_CHOOSER_ACTION_SAVE,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+        response = dialog.run()
+        
+        if response == gtk.RESPONSE_OK:
+            pathFile = dialog.get_filename()
+            print pathFile
+            func.defineOutPutFile(pathFile) 
+            print dialog.get_filename()
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'closed, no files selected'
+        dialog.destroy()
 
-    # self.Login = self.xmlLogin.get_widget('login')
-    # self.WinChooseListFileRhsaCve = self.xmlChooseListFileRhsaCve.get_widget('winChooseListFileRhsaCve')
+        print 'OutPut File RHSA CVE'
+        
+    def btnRunRhsaCve_clicked(self, widget):
+        func.listCveRhsa()
+        print 'Run RHSA CVE'
+        
+    def btnSendLogin_clicked(self, widget):
+        print 'Send Login'
+        
+    def btnCloseLogin_clicked(self,widget):
+        self.xml.get_widget('login').hide()
+        
+    def btnCleanLogin_clicked(self, widget):
+        print 'Clean Login'
 
-    #    self.btnLogin.connect('clicked', self.on_btnLogin_clicked)
-    # self.btnLogin.connect('clicked', self.on_btnLocal_clicked)
-    # self.btnListFileRhsaCve.connect('clicked', self.on_btnListFileRhsaCve_clicked)
-
-
-  # def on_btnListFileRhsaCve_clicked(self, widget):
-  #  self.xmlChooseListFileRhsaCve.show()
-
-  # def on_btnLocal_clicked(self, widget):
-#    self.LabelTitle.set_text('xxxxx')
-  #  self.Login.show()
-
-
-#    self.mainWindow = self.wTree.get_widget('Principal')
-#    self.mainWindow.set_title("teste")
-
-#    self.mainWindow.connect('destroy', gtk.main_quit)
-
+    def main_quit(self,widget):
+        sys.exit()
 
 if __name__ == "__main__":
     w = SatReport()
