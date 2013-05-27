@@ -10,11 +10,10 @@ import os
 import config
 import mainWindow
 from macpath import split
-#from config import *
 
 # Global Vars
-nameFileOut=""
-nameFileIn=""
+#nameFileOut=""
+#nameFileIn=""
 
 
 

@@ -1,4 +1,5 @@
 import xmlrpclib
+import mainWindow
 
 serverName=""
 userName=""
@@ -35,6 +36,7 @@ def connectServer():
     client = xmlrpclib.Server(SATELLITE_URL, verbose=0)
     key = client.auth.login(SATELLITE_LOGIN, SATELLITE_PASSWD)
     list = client.user.list_users(key)
+    
 
 """    
     print 'INICIO VALORES CONFIG'

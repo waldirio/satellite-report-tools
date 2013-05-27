@@ -1,15 +1,15 @@
 import sys
 import xmlrpclib
 try:
-  import pygtk
-  pygtk.require("2.0")
+    import pygtk
+    pygtk.require("2.0")
 except:
-  pass
+    pass
 try:
-  import gtk
-  import gtk.glade
+    import gtk
+    import gtk.glade
 except:
-  sys.exit(1)
+    sys.exit(1)
 
 import func
 import config
@@ -37,7 +37,7 @@ class SatReport:
                 }
     
         self.xml.signal_autoconnect(dic)
-
+        
 
     def btnCloseAbout_clicked(self, widget):
         self.xml.get_widget('about').hide()
@@ -48,7 +48,7 @@ class SatReport:
     
     def btnLogin_clicked(self, widget):
         self.xml.get_widget('login').show()
-        config.connectServer()
+        #config.connectServer()
         print "Login"
         
     def btnListFileRhsaCve_clicked(self, widget):
@@ -95,12 +95,17 @@ class SatReport:
         print 'Run RHSA CVE'
         
     def btnSendLogin_clicked(self, widget):
+        config.connectServer()
+        if config.key != "":
+            self.xml.get_widget('lbStatus').set_text('connected')
         print 'Send Login'
         
     def btnCloseLogin_clicked(self,widget):
         self.xml.get_widget('login').hide()
         
     def btnCleanLogin_clicked(self, widget):
+        self.xml.get_widget('txUser').set_text('')
+        self.xml.get_widget('txPass').set_text('')
         print 'Clean Login'
 
     def main_quit(self,widget):
