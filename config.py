@@ -1,20 +1,12 @@
 import xmlrpclib
 import mainWindow
 
-serverName=""
-userName=""
-passWord=""
 client=""
 key=""
 
 def connectServer(user, password):
-#    print user
-#    print password
     print 'Connecting RHNSatellite Server'
     # Global Vars
-    global serverName
-    global userName
-    global passWord
     global client
     global key
     global list

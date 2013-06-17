@@ -6,15 +6,8 @@
 # Changelog ...: 
 # 
 # 
-import os
-import config
+
 import mainWindow
-from macpath import split
-
-# Global Vars
-#nameFileOut=""
-#nameFileIn=""
-
 
 
 def openWindow():

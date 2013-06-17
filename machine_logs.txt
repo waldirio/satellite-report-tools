@@ -1,0 +1,6 @@
+NODE;CVE;RHSA
+cacti01;-;RHSA-2013:0815;
+cacti01;CVE-2012-6537;-;
+rhevm01.iesbrazil.com.br;CVE-2012-6537;-;
+smb01;CVE-2012-6537;-;
+storage.iesbrazil.com.br;CVE-2012-6537;-;

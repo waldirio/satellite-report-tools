@@ -56,3 +56,5 @@ def listCveRhsa():
             findSystemCve(b)
         else:
             print 'discarding ...., comments or blank line'
+    
+    print 'Finished'

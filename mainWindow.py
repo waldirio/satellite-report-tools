@@ -95,7 +95,9 @@ class SatReport:
         print 'Run RHSA CVE'
         
     def btnSendLogin_clicked(self, widget):
-        config.connectServer(self.xml.get_widget('txUser').get_text(),self.xml.get_widget('txPass').get_text())
+        userName = self.xml.get_widget('txUser').get_text()
+        passWord = self.xml.get_widget('txPass').get_text()
+        config.connectServer(userName,passWord)
         if config.key != "":
             self.xml.get_widget('lbStatus').set_text('connected')
         print 'Send Login'
